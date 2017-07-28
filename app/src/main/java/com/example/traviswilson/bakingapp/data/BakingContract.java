@@ -50,6 +50,7 @@ public class BakingContract {
         public static final String VIDEO_URL = "video_url";
         public static final String THUMB_NAIL_URL = "thumb_nail_url";
         public static final String MAIN_KEY = "main_key";
+        public static final String DESCRIPTION = "description";
         public static Uri getUriFromID(long ID){
             return ContentUris.withAppendedId(CONTENT_URI, ID);
         }

@@ -14,7 +14,7 @@ import static com.example.traviswilson.bakingapp.data.BakingContract.*;
 
 public class BakingDBHelper extends SQLiteOpenHelper{
     public static final String DATABASE_NAME = "baking.db";
-    private static final int DATABASE_VERSION = 5;
+    private static final int DATABASE_VERSION = 6;
     public BakingDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -35,7 +35,8 @@ public class BakingDBHelper extends SQLiteOpenHelper{
                 RecipeStep.STEP_ID + " INTEGER, " + //May still need to store the information
                 RecipeStep.THUMB_NAIL_URL + " TEXT, " +
                 RecipeStep.VIDEO_URL + " TEXT, " +
-                RecipeStep.MAIN_KEY  + " INTEGER NOT NULL, "
+                RecipeStep.MAIN_KEY  + " INTEGER NOT NULL, " +
+                RecipeStep.DESCRIPTION + " TEXT, "
 
                 + "FOREIGN KEY (" + RecipeStep.MAIN_KEY + ") REFERENCES "+
                 RecipeMain.TABLE_NAME + " (" + RecipeMain._ID + "));";
