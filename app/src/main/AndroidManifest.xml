@@ -10,6 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <provider
+            android:authorities="@string/content_authority"
+            android:exported="false"
+            android:name=".data.BakingProvider"
+            android:syncable="true"/>
+
     </application>
+
 
 </manifest>

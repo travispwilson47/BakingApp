@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Baking App</string>
+    <string name="recipe_image_content_description">Recipe Image</string>
+    <string name="content_authority">com.example.traviswilson.bakingapp.provider</string>
 </resources>
