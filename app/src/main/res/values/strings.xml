@@ -3,4 +3,10 @@
     <string name="recipe_image_content_description">Recipe Image</string>
     <string name="content_authority">com.example.traviswilson.bakingapp.provider</string>
     <string name="sync_account_type">bakingapp.traviswilson.example.com</string>
+    <string name="ingredient_test">Vanillia</string>
+    <string name="measurement_test">5 cups</string>
+    <string name="step_id_test">Step 1</string>
+    <string name="step_test">Get out the pudding</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="steps">Steps</string>
 </resources>

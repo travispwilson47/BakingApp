@@ -18,8 +18,6 @@ import static android.os.Build.ID;
  */
 
 public class BakingProvider extends ContentProvider {
-    //TODO: ContentResolver.notifyChange
-
     private final String LOG_TAG = getClass().getSimpleName();
     private BakingDBHelper mOpenHelper;
     private static final UriMatcher mUriMatcher = buildUriMatcher();
@@ -87,9 +85,14 @@ public class BakingProvider extends ContentProvider {
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection,
                         @Nullable String[] selectionArgs, @Nullable String sortOrder) {
         Log.v(LOG_TAG,""+uri.toString());
+        if( selection != null) {
+            selection = selection + " = ?";
+        }
+        Cursor c;
+
         switch (mUriMatcher.match(uri)){
             case MAIN:
-                return mOpenHelper.getReadableDatabase().query(
+                c = mOpenHelper.getReadableDatabase().query(
                         BakingContract.RecipeMain.TABLE_NAME,
                         projection,
                         selection,
@@ -98,8 +101,9 @@ public class BakingProvider extends ContentProvider {
                         null,
                         sortOrder
                 );
+                break;
             case MAIN_WITH_INGREDIENTS:
-                return mMainWithIngredientsBuilder.query(mOpenHelper.getReadableDatabase(),
+                c = mMainWithIngredientsBuilder.query(mOpenHelper.getReadableDatabase(),
                         projection,
                         selection,
                         selectionArgs,
@@ -107,8 +111,9 @@ public class BakingProvider extends ContentProvider {
                         null,
                         sortOrder
                 );
+                break;
             case MAIN_WITH_STEPS:
-                return mMainWithStepsBuilder.query(mOpenHelper.getReadableDatabase(),
+                c = mMainWithStepsBuilder.query(mOpenHelper.getReadableDatabase(),
                     projection,
                     selection,
                     selectionArgs,
@@ -116,9 +121,12 @@ public class BakingProvider extends ContentProvider {
                     null,
                     sortOrder
             );
+                break;
             default:
                 throw new UnsupportedOperationException();
         }
+        c.setNotificationUri(getContext().getContentResolver(), BakingContract.BASE_CONTENT_URI);
+        return c;
     }
 
     @Nullable

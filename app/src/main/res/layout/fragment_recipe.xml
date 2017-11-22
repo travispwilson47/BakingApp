@@ -2,13 +2,14 @@
 <!--Note that this class is used by both the tablet and phone layouts, only land-->
 <!--phone layout is different-->
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="wrap_content" android:layout_height="wrap_content"
+    android:background="@drawable/background_real">
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recipe_recycleView"
         android:orientation="vertical"
-        android:divider="?android:dividerVertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:numColumns="1">
     </android.support.v7.widget.RecyclerView>
 </FrameLayout>

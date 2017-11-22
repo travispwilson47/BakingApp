@@ -29,5 +29,9 @@ public class RealTimeTestDB {
     public void testDB(){
         Cursor cursor = mContext.getContentResolver().query(BakingContract.RecipeMain.CONTENT_URI, null, null, null, null);
         Log.v(LOG_TAG, "In main: "+cursor.getCount());
+        Cursor cursor2 = mContext.getContentResolver().query(BakingContract.RecipeIngredients.CONTENT_URI_WITH_MAIN_ADJOINED, null, null , null , null);
+        Log.v(LOG_TAG, "In Ingredients " + cursor2.getCount());
+        Cursor cursor3 = mContext.getContentResolver().query(BakingContract.RecipeStep.CONTENT_URI_WITH_MAIN_ADJOINED, null, null, null, null);
+        Log.v(LOG_TAG, "In Step "+ cursor3.getCount());
     }
 }

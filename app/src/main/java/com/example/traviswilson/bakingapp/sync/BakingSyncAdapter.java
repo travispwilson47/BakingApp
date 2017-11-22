@@ -29,6 +29,7 @@ import java.util.Vector;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 import static android.R.attr.id;
 import static android.util.Log.v;
@@ -55,6 +56,7 @@ public class BakingSyncAdapter extends AbstractThreadedSyncAdapter {
         Log.v(LOG_TAG, "Begining Sync");
 
         OkHttpClient client = new OkHttpClient();
+        ResponseBody body = null;
         try {
             Log.v(LOG_TAG, "Made it to before execute");
             Request request = new Request.Builder()
@@ -62,10 +64,15 @@ public class BakingSyncAdapter extends AbstractThreadedSyncAdapter {
                     .build();
             Response response = client.newCall(request).execute();
             Log.v(LOG_TAG, "Made it to after execute");
-            getInfoFromJSON(response.body().string());
+            body = response.body();
+            getContext().getContentResolver().notifyChange(BakingContract.BASE_CONTENT_URI, null, false);
         } catch (IOException e){
             e.printStackTrace();
             Log.v(LOG_TAG, "Error with http!");
+        } finally {
+            if (body != null) {
+                body.close();
+            }
         }
     }
 
@@ -105,7 +112,7 @@ public class BakingSyncAdapter extends AbstractThreadedSyncAdapter {
                 for (int ii= 0 ; ii < ingredients.length(); ii++ ){
                     ContentValues contentValuesForIngred = new ContentValues();
                     contentValuesForIngred.put(BakingContract.RecipeIngredients.MAIN_KEY, id_row);
-                    JSONObject ingredient = ingredients.getJSONObject(i);
+                    JSONObject ingredient = ingredients.getJSONObject(ii);
                     contentValuesForIngred.put(BakingContract.RecipeIngredients.QUANTITY, ingredient.getInt("quantity"));
                     contentValuesForIngred.put(BakingContract.RecipeIngredients.MEASURE, ingredient.getString("measure"));
                     contentValuesForIngred.put(BakingContract.RecipeIngredients.INGREDIENT, ingredient.getString("ingredient"));
@@ -117,6 +124,7 @@ public class BakingSyncAdapter extends AbstractThreadedSyncAdapter {
                     stepContentValues.toArray(new ContentValues[stepContentValues.size()]));
             getContext().getContentResolver().bulkInsert(BakingContract.RecipeIngredients.CONTENT_URI,
                     ingredContentValues.toArray(new ContentValues[ingredContentValues.size()]));
+
         } catch (JSONException e) {
             e.printStackTrace();
         }

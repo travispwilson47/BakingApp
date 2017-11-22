@@ -14,7 +14,7 @@ import static com.example.traviswilson.bakingapp.data.BakingContract.*;
 
 public class BakingDBHelper extends SQLiteOpenHelper{
     public static final String DATABASE_NAME = "baking.db";
-    private static final int DATABASE_VERSION = 6;
+    private static final int DATABASE_VERSION = 8;
     public BakingDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -26,7 +26,9 @@ public class BakingDBHelper extends SQLiteOpenHelper{
                 RecipeMain.IMAGE + " TEXT, "+
                 RecipeMain.NAME + " TEXT NOT NULL, " +
                 RecipeMain.RECIPE_ID + " INTEGER NOT NULL, " +
-                RecipeMain.SERVINGS + " INTEGER );" ;
+                RecipeMain.SERVINGS + " INTEGER ," +
+
+                " UNIQUE ("+ RecipeMain.NAME + ") ON CONFLICT REPLACE);";
 
 
         final String SQL_CREATE_STEPS_TABLE = "CREATE TABLE " + RecipeStep.TABLE_NAME +" ("+
@@ -36,9 +38,11 @@ public class BakingDBHelper extends SQLiteOpenHelper{
                 RecipeStep.THUMB_NAIL_URL + " TEXT, " +
                 RecipeStep.VIDEO_URL + " TEXT, " +
                 RecipeStep.MAIN_KEY  + " INTEGER NOT NULL, " +
-                RecipeStep.DESCRIPTION + " TEXT, "
+                RecipeStep.DESCRIPTION + " TEXT," +
 
-                + "FOREIGN KEY (" + RecipeStep.MAIN_KEY + ") REFERENCES "+
+                //" UNIQUE (" + RecipeMain.NAME+ ") ON CONFLICT REPLACE," +
+
+                 "FOREIGN KEY (" + RecipeStep.MAIN_KEY + ") REFERENCES "+
                 RecipeMain.TABLE_NAME + " (" + RecipeMain._ID + "));";
         final String SQL_CREATE_INGREDIENTS_TABLE = "CREATE TABLE " + RecipeIngredients.TABLE_NAME
                 + " (" +
@@ -46,9 +50,11 @@ public class BakingDBHelper extends SQLiteOpenHelper{
                 RecipeIngredients.INGREDIENT + " TEXT NOT NULL, " +
                 RecipeIngredients.MEASURE + " TEXT NOT NULL, " +
                 RecipeIngredients.QUANTITY + " REAL NOT NULL, " +
-                RecipeIngredients.MAIN_KEY + " INTEGER NOT NULL, "
+                RecipeIngredients.MAIN_KEY + " INTEGER NOT NULL," +
 
-                + "FOREIGN KEY (" + RecipeIngredients.MAIN_KEY + ") REFERENCES "+
+                //" UNIQUE (" + RecipeMain.NAME+ ") ON CONFLICT REPLACE," +
+
+                "FOREIGN KEY (" + RecipeIngredients.MAIN_KEY + ") REFERENCES "+
                 RecipeMain.TABLE_NAME + " (" + RecipeMain._ID + "));";
         sqLiteDatabase.execSQL(SQL_CREATE_MAIN_TABLE);
         sqLiteDatabase.execSQL(SQL_CREATE_INGREDIENTS_TABLE);
