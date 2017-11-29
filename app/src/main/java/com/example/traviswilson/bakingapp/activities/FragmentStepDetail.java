@@ -120,6 +120,9 @@ public class FragmentStepDetail extends Fragment implements
             view = inflater.inflate(R.layout.fragment_step_detail_page, container, false);
         }
         rootView = view;
+
+        rootView.findViewById(R.id.step_description_textview);
+
         if (!videoUrlPresent) return view;
         Log.v(LOG_TAG, "video Url: "+videoURL);
 
