@@ -234,7 +234,9 @@ public class FragmentStepDetail extends Fragment implements
     @Override
     public void onPause(){
         super.onPause();
-        mediaControler.hide();
+        if (mediaControler != null) {
+            mediaControler.hide();
+        }
     }
     public void onPageScrolled(){
 //        if (mediaControler != null && mediaPlayer != null){
