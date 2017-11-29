@@ -75,6 +75,7 @@ public class FragmentStepDetail extends Fragment implements
     private View rootView;
     private boolean videoUrlPresent;
     private boolean aspectsSet;
+    private TextView descriptionView;
 
 
     //TODO: Save instance state of the video playing (for device rotation)
@@ -121,7 +122,7 @@ public class FragmentStepDetail extends Fragment implements
         }
         rootView = view;
 
-        rootView.findViewById(R.id.step_description_textview);
+        descriptionView = rootView.findViewById(R.id.step_description_textview);
 
         if (!videoUrlPresent) return view;
         Log.v(LOG_TAG, "video Url: "+videoURL);
@@ -226,6 +227,7 @@ public class FragmentStepDetail extends Fragment implements
         set.centerHorizontally(R.id.surfaceView, R.id.constraintLayout);
         set.applyTo(rootLayout);
         aspectsSet = true;
+        //descriptionView.setText(description);
     }
     @Override
     public void onSaveInstanceState(Bundle b){
