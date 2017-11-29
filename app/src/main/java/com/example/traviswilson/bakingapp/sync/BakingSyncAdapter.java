@@ -65,6 +65,7 @@ public class BakingSyncAdapter extends AbstractThreadedSyncAdapter {
             Response response = client.newCall(request).execute();
             Log.v(LOG_TAG, "Made it to after execute");
             body = response.body();
+            getInfoFromJSON(body.string());
             getContext().getContentResolver().notifyChange(BakingContract.BASE_CONTENT_URI, null, false);
         } catch (IOException e){
             e.printStackTrace();
